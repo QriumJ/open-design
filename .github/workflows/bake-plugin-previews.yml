@@ -72,7 +72,7 @@ jobs:
           r2-endpoint: ${{ secrets.CLOUDFLARE_R2_REPOSITORY_ASSETS_URL }}
 
       - name: Mint release-bot token for the rolling manifest PR
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.repository == 'nexu-io/open-design' && github.ref == 'refs/heads/main' }}
         id: app
         # A GITHUB_TOKEN-authored push/PR does NOT trigger workflows, so a manifest
         # PR opened with it never runs `Validate workspace` — main's required check
@@ -88,7 +88,7 @@ jobs:
           private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
 
       - name: Open or update the rolling manifest PR for review
-        if: ${{ github.ref == 'refs/heads/main' }} # branch debug runs skip publishing
+        if: ${{ github.repository == 'nexu-io/open-design' && github.ref == 'refs/heads/main' }} # branch debug runs skip publishing
         # The clips are already on R2; the manifest is version-pinned (it ships
         # with the build), so it must land on main through a reviewed PR rather
         # than a direct push to protected main.
